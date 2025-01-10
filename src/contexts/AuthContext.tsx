@@ -6,7 +6,6 @@ import {
   signInWithPopup,
   signOut as firebaseSignOut,
   onAuthStateChanged,
-  GoogleAuthProvider,
   GithubAuthProvider,
   linkWithPopup
 } from 'firebase/auth';
@@ -132,4 +131,3 @@ export const useAuth = () => {
   }
   return context;
 };
-
