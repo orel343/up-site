@@ -7,7 +7,7 @@ import { db } from '../../lib/firebase';
 import { ActivityGraph } from '../../components/ActivityGraph';
 import { themes, Theme } from '../../lib/themes';
 import { useTheme } from 'next-themes';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
@@ -16,8 +16,6 @@ import { Monitor, Github } from 'lucide-react'
 
 export default function Settings() {
   const { user, signOut, linkGithub, unlinkGithub } = useAuth();
-  const [saving, setSaving] = useState(false);
-  const [googleLinked, setGoogleLinked] = useState(false);
   const [githubLinked, setGithubLinked] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
   const [message, setMessage] = useState('');
@@ -31,7 +29,6 @@ export default function Settings() {
           const savedTheme = settingsDoc.data().theme;
           if (savedTheme) setTheme(savedTheme);
         }
-        setGoogleLinked(user.providerData.some(provider => provider.providerId === 'google.com'));
         setGithubLinked(user.providerData.some(provider => provider.providerId === 'github.com'));
       };
       fetchSettings();
@@ -41,7 +38,7 @@ export default function Settings() {
   const saveTheme = async (newTheme: Theme) => {
     if (!user) return;
 
-    setSaving(true);
+    setIsProcessing(true);
     try {
       await setDoc(doc(db, 'userSettings', user.uid), { theme: newTheme }, { merge: true });
       setTheme(newTheme);
@@ -50,7 +47,7 @@ export default function Settings() {
       console.error('Error saving theme:', error);
       setMessage('Failed to save theme');
     }
-    setSaving(false);
+    setIsProcessing(false);
     setTimeout(() => setMessage(''), 3000);
   };
 
@@ -125,13 +122,13 @@ export default function Settings() {
 
             <div className="space-y-2">
               <Label>Default Team</Label>
-              <Select defaultValue={`${user.email}'s projects`}>
+              <Select defaultValue={`${user.email}&apos;s projects`}>
                 <SelectTrigger>
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value={`${user.email}'s projects`}>
-                    {user.email}'s projects
+                  <SelectItem value={`${user.email}&apos;s projects`}>
+                    {user.email}&apos;s projects
                   </SelectItem>
                 </SelectContent>
               </Select>
