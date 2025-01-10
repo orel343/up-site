@@ -24,14 +24,13 @@ function generateMockActivity(): ActivitySquare[] {
 }
 
 export function ActivityGraph() {
-  const { theme } = useTheme();
   const activity = generateMockActivity();
 
   return (
     <div className="w-full overflow-x-auto">
       <div className="min-w-full p-4">
         <div className="flex flex-wrap gap-1">
-          {activity.map((day, i) => (
+          {activity.map((day) => (
             <div
               key={day.date}
               className={`w-3 h-3 rounded-sm transition-colors ${
@@ -53,4 +52,3 @@ export function ActivityGraph() {
     </div>
   );
 }
-
