@@ -24,14 +24,18 @@ export default function Login() {
         await signInWithGithub();
       }
       router.push('/dashboard');
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Authentication error:', error);
-      if (error.code === 'auth/popup-closed-by-user') {
-        setError('Sign-in was cancelled. Please try again.');
-      } else if (error.code === 'auth/account-exists-with-different-credential') {
-        setError('An account already exists with the same email address but different sign-in credentials.');
+      if (error instanceof Error) {
+        if (error.name === 'PopupClosedByUserError') {
+          setError('Sign-in was cancelled. Please try again.');
+        } else if (error.message.includes('account-exists-with-different-credential')) {
+          setError('An account already exists with the same email address but different sign-in credentials.');
+        } else {
+          setError(`Failed to sign in. Error: ${error.message}`);
+        }
       } else {
-        setError(`Failed to sign in. Error: ${error.message}`);
+        setError('An unexpected error occurred during sign in.');
       }
     } finally {
       setIsLoading(false);
