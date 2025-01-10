@@ -16,7 +16,7 @@ export default function UserProfile() {
       await updateUserEmail(newEmail);
       setMessage('Email updated successfully');
       setNewEmail('');
-    } catch (error) {
+    } catch {
       setMessage('Failed to update email');
     }
   };
@@ -28,7 +28,7 @@ export default function UserProfile() {
       await updateUserPassword(newPassword);
       setMessage('Password updated successfully');
       setNewPassword('');
-    } catch (error) {
+    } catch {
       setMessage('Failed to update password');
     }
   };
@@ -73,4 +73,3 @@ export default function UserProfile() {
     </div>
   );
 }
-
