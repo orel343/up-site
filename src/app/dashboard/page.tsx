@@ -52,7 +52,8 @@ export default function Dashboard() {
     return acc;
   }, {} as Record<string, number>);
 
-  const chartData = Object.entries(serverCounts).map(([name, value]) => ({ name, value }));
+  // Remove the unused chartData variable
+  // const chartData = Object.entries(serverCounts).map(([name, value]) => ({ name, value }));
 
   return (
     <div className="w-full max-w-4xl">
@@ -104,7 +105,7 @@ export default function Dashboard() {
           <CardDescription>Distribution of projects across different servers</CardDescription>
         </CardHeader>
         <CardContent>
-        
+        {/* You can add server distribution content here */}
         </CardContent>
       </Card>
     </div>
